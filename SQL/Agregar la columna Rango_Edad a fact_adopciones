@@ -1,0 +1,20 @@
+--Agregar la columna Rango_Edad a fact_adopciones
+-- Comando 1: Desactivar Safe Mode
+SET SQL_SAFE_UPDATES = 0;
+-- Comando 2: Agregar columna
+ALTER TABLE fact_adopciones ADD COLUMN Rango_Edad VARCHAR(50);
+-- Comando 3: Poblar la columna
+UPDATE fact_adopciones 
+SET Rango_Edad = CASE 
+    WHEN Age = 0 THEN '0 meses (recién nacido)'
+    WHEN Age BETWEEN 1 AND 3 THEN '1-3 meses (cachorro)'
+    WHEN Age BETWEEN 4 AND 6 THEN '4-6 meses (joven)'
+    WHEN Age BETWEEN 7 AND 12 THEN '7-12 meses (adolescente)'
+    WHEN Age BETWEEN 13 AND 24 THEN '13-24 meses (adulto joven)'
+    WHEN Age BETWEEN 25 AND 60 THEN '25-60 meses (adulto)'
+    WHEN Age > 60 THEN '60+ meses (senior)'
+    ELSE 'Desconocido'
+END;
+-- Comando 4: Reactivar Safe Mode
+SET SQL_SAFE_UPDATES = 1;
+
