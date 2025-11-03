@@ -1,0 +1,6 @@
+--buscar si en gatos hay razas de perros
+SELECT PetID, Name, Pet_Type, dim_breeds.BreedName, fact_adopciones.Type, Breed1
+FROM fact_adopciones
+INNER JOIN dim_breeds ON fact_adopciones.Breed1 = dim_breeds.BreedID
+WHERE (dim_breeds.BreedName = 'Shih Tzu' AND fact_adopciones.Pet_Type = 'Gato')
+OR (dim_breeds.BreedName = 'Terrier' AND fact_adopciones.Pet_Type = 'Gato');
